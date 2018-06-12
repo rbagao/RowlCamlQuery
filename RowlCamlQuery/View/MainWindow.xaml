@@ -1,0 +1,47 @@
+﻿<Window x:Class="RowlCamlQuery.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RowlCamlQuery.View"
+        xmlns:ViewModels="clr-namespace:RowlCamlQuery.ViewModels"
+        mc:Ignorable="d"
+        Title="Caml Query Tester" Height="500" Width="700" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    
+    <Window.DataContext>
+        <ViewModels:MainWindowViewModel x:Name="mvvm" />
+    </Window.DataContext>
+    
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Label Content="Site:" />
+                <TextBox Text="{Binding Site, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="250" />
+                <Label Content="List:" />
+                <TextBox Text="{Binding List, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150" />
+                <Label Content="ContentType:" />
+                <TextBox Text="{Binding ContentTypeName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150" />
+            </ToolBar>
+            <ToolBar>
+                <Button Content="Execute" Command="{Binding ExecuteCommand}" IsEnabled="{Binding CanExecute}" />
+            </ToolBar>
+        </ToolBarTray>
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBox Grid.Row="0" x:Name="textBox" Text="{Binding Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" 
+                 HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  />
+            <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch" />
+            <DataGrid Grid.Row="2" x:Name="dataGrid" Margin="0" ItemsSource="{Binding Results, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ColumnWidth="100" RowHeight="20" />
+        </Grid>
+        
+    </DockPanel>
+    
+</Window>
